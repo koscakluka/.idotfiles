@@ -1,4 +1,4 @@
-export const MacOsNotifyPlugin = async ({ project, $ }) => {
+export const NotifyPlugin = async ({ project, $ }) => {
   const lastIdleBySession = new Map()
   const suppressNextIdleBySession = new Set()
   const assistantMessageIDs = new Set()
@@ -28,6 +28,12 @@ export const MacOsNotifyPlugin = async ({ project, $ }) => {
       .replace(/\r?\n/g, " ")
 
   const notify = async (title, message, subtitle) => {
+    if (process.env.TMUX) {
+      try {
+        await $`tmux oc-notify`
+      } catch {}
+    }
+
     const script = [
       `display notification "${esc(message)}"`,
       `with title "${esc(title)}"`,
