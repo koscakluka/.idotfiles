@@ -3,15 +3,32 @@ export const NotifyPlugin = async ({ project, $ }) => {
   const suppressNextIdleBySession = new Set()
   const assistantMessageIDs = new Set()
   const lastAssistantTextBySession = new Map()
+  const sessionTitleBySession = new Map()
   const askedQuestionIDs = new Set()
   const askedPermissionIDs = new Set()
 
-  const projectName = (() => {
-    if (project?.name) return String(project.name)
-    if (project?.worktree) {
-      const parts = String(project.worktree).split("/").filter(Boolean)
-      if (parts.length > 0) return parts[parts.length - 1]
+  const basename = (value) => {
+    const parts = String(value ?? "").split("/").filter(Boolean)
+    return parts.length > 0 ? parts[parts.length - 1] : ""
+  }
+
+  const projectName = await (async () => {
+    const worktree = typeof project?.worktree === "string" ? project.worktree : ""
+
+    if (worktree) {
+      try {
+        const result = await $`git -C ${worktree} rev-parse --show-toplevel`.quiet().nothrow()
+        if (result.exitCode === 0) {
+          const root = result.text().trim()
+          const rootName = basename(root)
+          if (rootName) return rootName
+        }
+      } catch {}
+
+      const worktreeName = basename(worktree)
+      if (worktreeName) return worktreeName
     }
+
     return "OpenCode"
   })()
 
@@ -27,10 +44,27 @@ export const NotifyPlugin = async ({ project, $ }) => {
       .replace(/"/g, '\\"')
       .replace(/\r?\n/g, " ")
 
-  const notify = async (title, message, subtitle) => {
+  const getSessionTitle = (sessionID) => {
+    if (!sessionID) return undefined
+    const value = sessionTitleBySession.get(sessionID)
+    return typeof value === "string" && value.length > 0 ? value : undefined
+  }
+
+  const rememberSessionTitle = (session) => {
+    const sessionID = session?.id
+    const title = typeof session?.title === "string" ? session.title.trim() : ""
+    if (!sessionID || !title) return
+    sessionTitleBySession.set(sessionID, truncate(title, 120))
+  }
+
+  const notify = async (title, message, sessionID) => {
+    const sessionTitle = getSessionTitle(sessionID)
+    const subtitle = projectName
+
     if (process.env.TMUX) {
+      const tmuxMessage = sessionTitle || projectName
       try {
-        await $`tmux oc-notify`
+        await $`tmux oc-notify-msg ${tmuxMessage}`
       } catch {}
     }
 
@@ -45,6 +79,17 @@ export const NotifyPlugin = async ({ project, $ }) => {
 
   return {
     event: async ({ event }) => {
+      if (event.type === "session.created" || event.type === "session.updated") {
+        rememberSessionTitle(event.properties?.info)
+        return
+      }
+
+      if (event.type === "session.deleted") {
+        const sessionID = event.properties?.info?.id
+        if (sessionID) sessionTitleBySession.delete(sessionID)
+        return
+      }
+
       if (event.type === "message.updated") {
         const info = event.properties?.info
         if (info?.role !== "assistant") return
@@ -90,7 +135,7 @@ export const NotifyPlugin = async ({ project, $ }) => {
           firstQuestion?.question ||
           firstQuestion?.header ||
           "OpenCode is waiting for your input."
-        await notify("OpenCode Question", truncate(questionText, 200), projectName)
+        await notify("OpenCode Question", truncate(questionText, 200), request.sessionID)
         return
       }
 
@@ -110,7 +155,7 @@ export const NotifyPlugin = async ({ project, $ }) => {
         const patternText = rawPatterns.length > 0 ? ` (${rawPatterns.join(", ")})` : ""
         const body = `Needs ${permissionType}${patternText}`
 
-        await notify("OpenCode Permission", truncate(body, 200), projectName)
+        await notify("OpenCode Permission", truncate(body, 200), request.sessionID)
         return
       }
 
@@ -130,7 +175,7 @@ export const NotifyPlugin = async ({ project, $ }) => {
 
         const snippet = lastAssistantTextBySession.get(sessionID)
         const message = snippet ? truncate(snippet, 140) : "Completed"
-        await notify("OpenCode Complete", message, projectName)
+        await notify("OpenCode Complete", message, sessionID)
       }
     },
   }
