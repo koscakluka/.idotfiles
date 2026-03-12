@@ -57,6 +57,20 @@ export const NotifyPlugin = async ({ project, $ }) => {
     sessionTitleBySession.set(sessionID, truncate(title, 120))
   }
 
+  const getCurrentTmuxSession = async () => {
+    if (!process.env.TMUX) return ""
+
+    try {
+      const result = await $`tmux display-message -p '#{session_name}'`.quiet().nothrow()
+      if (result.exitCode !== 0) return ""
+
+      const value = result.text().trim()
+      return value
+    } catch {
+      return ""
+    }
+  }
+
   const notify = async (title, message, sessionID) => {
     const sessionTitle = getSessionTitle(sessionID)
     const subtitle = projectName
@@ -64,7 +78,13 @@ export const NotifyPlugin = async ({ project, $ }) => {
     if (process.env.TMUX) {
       const tmuxMessage = sessionTitle || projectName
       try {
-        await $`tmux oc-notify-msg ${tmuxMessage}`
+        const tmuxSession = await getCurrentTmuxSession()
+        if (tmuxSession) {
+          const payload = `--session=${tmuxSession} --msg=${tmuxMessage}`
+          await $`tmux oc-notify-msg ${payload}`
+        } else {
+          await $`tmux oc-notify-msg ${tmuxMessage}`
+        }
       } catch {}
     }
 
