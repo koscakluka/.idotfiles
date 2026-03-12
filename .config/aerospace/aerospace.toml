@@ -74,6 +74,9 @@ default-root-container-orientation = 'auto' # horizontal|vertical|auto
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
+    alt-q = 'close'
+    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
 [mode.resize.binding]
     h = 'resize width -50'
     j = 'resize height +50'
@@ -109,11 +112,13 @@ if.app-id = "md.obsidian"
 run = "move-node-to-workspace 5"
 
 # TODO
-# [workspace-to-monitor-force-assignment]
-#     1 = '^built-in retina display$'
-#     2 = '^built-in retina display$'
-#     3 = '^Dell$'
-#     4 = '^Dell$'
+[workspace-to-monitor-force-assignment]
+    1 = '^built-in retina display$'
+    2 = '^DELL U2715H$|^BenQ RD320UA$'
+    3 = '^DELL U2715H$|^BenQ RD320UA$'
+    4 = '^built-in retina display$'
+    5 = '^DELL U2715H$|^BenQ RD320UA$'
+    6 = '^DELL U2715H$|^BenQ RD320UA$'
 
 # Sources:
 # - https://nikitabobko.github.io/AeroSpace/goodies#i3-like-config
