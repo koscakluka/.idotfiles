@@ -1,0 +1,43 @@
+[colors.primary]
+background = "0xfffefd"
+foreground = "0x969cb9"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+[colors.search.matches]
+foreground = "0x1b1e28" # Using previous default, no direct iTerm mapping
+background = "0xadd7ff" # Using previous default, no direct iTerm mapping
+
+[colors.search.focused_match]
+foreground = "0x1b1e28" # Using previous default, no direct iTerm mapping
+background = "0xadd7ff" # Using previous default, no direct iTerm mapping
+
+[colors.selection]
+text = "CellForeground"
+background = "0x717c71"
+
+[colors.vi_mode_cursor]
+text = "CellBackground" # Using previous default, no direct iTerm mapping
+cursor = "CellForeground" # Using previous default, no direct iTerm mapping
+
+[colors.normal]
+black = "0xfffefd"
+red = "0xff2090"
+green = "0x01daaf"
+yellow = "0xffd467"
+blue = "0x8a72ce"
+magenta = "0xec8394"
+cyan = "0x8a72ce"
+white = "0x000000"
+
+[colors.bright]
+black = "0xbdbdc7"
+red = "0xff2090"
+green = "0x01daaf"
+yellow = "0xffd467"
+blue = "0x8a72ce"
+magenta = "0xec8394"
+cyan = "0x8a72ce"
+white = "0x000000"

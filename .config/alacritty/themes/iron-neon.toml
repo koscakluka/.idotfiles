@@ -1,0 +1,53 @@
+# Iron Neon (dark, red-accent) — Alacritty TOML
+
+# draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "#0A0B0E"
+foreground = "#CDD3DA"
+
+[colors.cursor]
+text = "#0A0B0E"
+cursor = "#CDD3DA"
+
+[colors.selection]
+text = "#CDD3DA"
+background = "#1B1F27"
+
+[colors.search.matches]
+foreground = "#0A0B0E"
+background = "#C9A85A"
+
+[colors.search.focused_match]
+foreground = "#0A0B0E"
+background = "#FF4D5A"
+
+[colors.normal]
+black = "#101217"
+red = "#D24A57"
+green = "#7FAD86"
+yellow = "#C9A85A"
+blue = "#6F8FC9"
+magenta = "#B388D6"
+cyan = "#6FB6C2"
+white = "#B8C0CA"
+
+[colors.bright]
+black = "#2A303A"
+red = "#FF4D5A"
+green = "#9AD0A3"
+yellow = "#E0C57B"
+blue = "#8FB0EA"
+magenta = "#D0A6F0"
+cyan = "#89D3DE"
+white = "#E8EDF3"
+
+[colors.dim]
+black = "#0B0D11"
+red = "#A83A43"
+green = "#5E8165"
+yellow = "#9E8548"
+blue = "#4F6694"
+magenta = "#835AA3"
+cyan = "#4C808A"
+white = "#9AA3AE"
