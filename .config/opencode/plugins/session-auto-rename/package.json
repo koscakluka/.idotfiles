@@ -1,0 +1,9 @@
+{
+  "name": "local-session-auto-rename",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./server": "./server.js",
+    "./tui": "./tui.js"
+  }
+}

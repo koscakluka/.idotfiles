@@ -1,4 +1,21 @@
-export const NotifyPlugin = async ({ project, $ }) => {
+export const NotifyPlugin = async ({ project, $ }, options) => {
+  if (options?.enabled === false) return {}
+
+  const VALID_EVENTS = new Set(["question", "permission", "complete"])
+
+  // Allowed values for options.events: question, permission, complete.
+  const enabledEvents = (() => {
+    if (!Array.isArray(options?.events)) return new Set(VALID_EVENTS)
+
+    const normalized = options.events
+      .map((value) => String(value ?? "").trim().toLowerCase())
+      .filter((value) => VALID_EVENTS.has(value))
+
+    return new Set(normalized)
+  })()
+
+  const shouldNotify = (eventName) => enabledEvents.has(eventName)
+
   const lastIdleBySession = new Map()
   const suppressNextIdleBySession = new Set()
   const assistantMessageIDs = new Set()
@@ -111,6 +128,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "message.updated") {
+        if (!shouldNotify("complete")) return
+
         const info = event.properties?.info
         if (info?.role !== "assistant") return
 
@@ -123,6 +142,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "session.error") {
+        if (!shouldNotify("complete")) return
+
         const sessionID = event.properties?.sessionID
         const errorName = event.properties?.error?.name
         if (sessionID && errorName === "MessageAbortedError") {
@@ -132,6 +153,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "message.part.updated") {
+        if (!shouldNotify("complete")) return
+
         const part = event.properties?.part
         if (part?.type !== "text") return
         if (!assistantMessageIDs.has(part.messageID)) return
@@ -146,6 +169,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "question.asked") {
+        if (!shouldNotify("question")) return
+
         const request = event.properties
         if (!request?.id || askedQuestionIDs.has(request.id)) return
         askedQuestionIDs.add(request.id)
@@ -160,6 +185,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "permission.asked" || event.type === "permission.updated") {
+        if (!shouldNotify("permission")) return
+
         const request = event.properties
         if (!request?.id || askedPermissionIDs.has(request.id)) return
         askedPermissionIDs.add(request.id)
@@ -180,6 +207,8 @@ export const NotifyPlugin = async ({ project, $ }) => {
       }
 
       if (event.type === "session.idle") {
+        if (!shouldNotify("complete")) return
+
         const sessionID = event.properties?.sessionID
         if (!sessionID) return
 
