@@ -1,7 +1,7 @@
 ---
 description: Validator for code review of correctness, edge cases, regressions, and test coverage. Prioritizes actionable findings with evidence and does not edit source files.
 mode: subagent
-model: openai/gpt-6-sol
+model: openai/gpt-6.1-sol-fast
 variant: xhigh
 permission:
   todowrite: deny

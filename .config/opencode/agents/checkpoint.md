@@ -1,7 +1,7 @@
 ---
 description: Creates authorized Git checkpoints from primary-agent context, including inspection, secret checks, staging, committing, and verification.
 mode: subagent
-model: openai/gpt-6-luna
+model: openai/gpt-6-luna-fast
 variant: max
 permission:
   edit: deny

@@ -1,8 +1,8 @@
 ---
 description: Explorer for cross-module behavior tracing, root-cause investigation, and dependency or impact analysis. Returns evidence-backed explanations without edits.
 mode: subagent
-model: openai/gpt-6-astra
-variant: low
+model: openai/gpt-6.1-sol-fast
+variant: xhigh
 permission:
   "*": deny
   grep: allow

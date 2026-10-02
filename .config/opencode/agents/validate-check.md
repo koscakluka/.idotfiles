@@ -1,7 +1,7 @@
 ---
 description: Default validator for running tests, lint, and typechecks and verifying explicit acceptance criteria. Reports failures and verification gaps without editing source files.
 mode: subagent
-model: openai/gpt-6-luna
+model: openai/gpt-6-luna-fast
 variant: high
 permission:
   todowrite: deny

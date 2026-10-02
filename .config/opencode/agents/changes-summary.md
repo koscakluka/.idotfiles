@@ -1,7 +1,7 @@
 ---
 description: Drafts concise change summaries and checkpoint commit subjects from supplied context and scoped diffs. Does not implement, review, test, or commit changes.
 mode: subagent
-model: openai/gpt-6-luna
+model: openai/gpt-6-luna-fast
 variant: high
 permission:
   "*": deny

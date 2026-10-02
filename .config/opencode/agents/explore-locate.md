@@ -1,7 +1,7 @@
 ---
 description: "Default explorer for locating files, symbols, usages, and relevant code paths. Returns focused code references. Specify thoroughness: quick, medium, or very thorough."
 mode: subagent
-model: openai/gpt-6-luna
+model: openai/gpt-6-luna-fast
 variant: high
 permission:
   "*": deny
