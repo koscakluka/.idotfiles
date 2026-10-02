@@ -1,8 +1,8 @@
 ---
 description: Default builder for well-defined changes with clear acceptance criteria. Use for focused fixes and implementation within an agreed design.
 mode: subagent
-model: openai/gpt-6-astra
-variant: low
+model: openai/gpt-6.1-sol
+variant: medium
 permission:
   question: allow
   plan_enter: allow

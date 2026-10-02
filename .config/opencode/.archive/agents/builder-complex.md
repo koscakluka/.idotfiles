@@ -1,8 +1,8 @@
 ---
 description: Builder for cross-cutting implementation requiring substantial design decisions, coordinated changes across modules, or complex migrations.
 mode: subagent
-model: openai/gpt-6-astra
-variant: medium
+model: openai/gpt-6.1-sol
+variant: xhigh
 permission:
   question: allow
   plan_enter: allow
