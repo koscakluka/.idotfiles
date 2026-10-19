@@ -1,5 +1,15 @@
 {
   "$schema": "https://opencode.ai/tui.json",
+  "attention": {
+    "enabled": true,
+    // Keep native question and permission sounds; silence other events.
+    "sounds": {
+      "default": "./silence.wav",
+      "done": "./silence.wav",
+      "error": "./silence.wav",
+      "subagent_done": "./silence.wav"
+    }
+  },
   "keybinds": {
     "session_list": "none"
   },

@@ -3,7 +3,6 @@
   "plugin": [
     "opencode-openai-codex-auth",
     "./plugins/session-auto-rename",
-    ["./notify/notify.js", { "enabled": true, "events": ["permission","question"] }],
   ],
   "provider": {
     "openai": {
