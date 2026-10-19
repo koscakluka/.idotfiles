@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+tmux neww -n nvim 'nvim .; exec $SHELL'
+# tmux neww -n nvim 'nvim +DBUI; exec $SHELL'
+tmux swap-window -t -1
+tmux neww
+tmux swap-window -t -1
+# tmux neww
+# tmux swap-window -t -1
+tmux select-window -t 1
