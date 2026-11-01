@@ -14,6 +14,6 @@
     "openai/gpt-6.1-terra",
     "openai/gpt-6-luna"
   ],
-  "packages": ["npm:pi-vim"]
+  "packages": ["npm:pi-vim", "./local/vim-leader/index.ts"]
 }
 
