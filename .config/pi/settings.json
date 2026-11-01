@@ -1,0 +1,19 @@
+{
+  "lastChangelogVersion": "1.4.0",
+  "deviceId": "d1bd4023-770b-4b76-a412-cd4b810dcafc",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-6.1-sol",
+  "hideThinkingBlock": true,
+  "images": {
+    "blockImages": true
+  },
+  "theme": "system",
+  "enabledModels": [
+    "openai/gpt-6-astra",
+    "openai/gpt-6.1-sol",
+    "openai/gpt-6.1-terra",
+    "openai/gpt-6-luna"
+  ],
+  "packages": ["npm:pi-vim"]
+}
+
