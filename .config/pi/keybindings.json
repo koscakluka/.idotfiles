@@ -1,0 +1,25 @@
+{
+  "$schema": "https://pi.dev/schemas/keybindings.schema.json",
+
+  "app.exit": "ctrl+q",
+  "app.model.cycleForward": "alt+m",
+  "app.model.select": [],
+  "app.models.toggleProvider": "alt+p",
+  "app.session.resume": "ctrl+l",
+  "app.session.toggleNamedFilter": "alt+n",
+  "app.session.togglePath": "alt+p",
+  "app.session.tree": "ctrl+f",
+  "app.thinking.cycle": "ctrl+t",
+  "app.thinking.toggle": "alt+t",
+
+  "tui.altScreen.halfPageDown": ["pageDown", "ctrl+d"],
+  "tui.altScreen.halfPageUp": ["pageUp", "ctrl+u"],
+  "tui.altScreen.pageDown": [],
+  "tui.altScreen.pageUp": [],
+  "tui.editor.yank": [],
+  "tui.editor.cursorRight": ["right"],
+  "tui.input.tab": "ctrl+y",
+  "tui.select.confirm": ["enter", "ctrl+y"],
+  "tui.select.down": ["down", "ctrl+n"],
+  "tui.select.up": ["up", "ctrl+p"]
+}

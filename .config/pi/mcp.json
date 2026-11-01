@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "exa": {
+      "url": "https://mcp.exa.ai/mcp",
+      "description": "Search the public web using Exa.",
+      "exposure": "hidden",
+      "toolExposure": {
+        "web_search_exa": "direct"
+      }
+    }
+  }
+}
